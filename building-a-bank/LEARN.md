@@ -1,9 +1,6 @@
 | pragma | osaes 0.0.1 |
-| ------ | ----------- |
 | published | false |
-| ------ | ----------- |
 | default_file | learn_src/Bank.sol |
-| ------------ | -------------------|
 
 # BUILDING A BANK WITH SOLIDITY; FOR BEGINNERS
 
