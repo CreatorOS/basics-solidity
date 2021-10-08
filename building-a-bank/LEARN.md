@@ -2,7 +2,7 @@
 | ------ | ----- |
 | pragma | osaes 0.0.1 |
 | published | false |
-| default_file | learn_src/Bank.sol |
+| default_file | learn_src/contracts/Bank.sol |
 
 # BUILDING A BANK WITH SOLIDITY; FOR BEGINNERS
 
@@ -28,7 +28,7 @@ We will be writing all our code in a new IDE called Remix. It sucks, but it’s 
 
 Remix is a code editor for Solidity. It also runs a toy blockchain that we’ll be using to deploy our first contract. Most of the steps are automated in Remix. In a later Quest, we’ll install all the components by hand to understand better what is happening under the hood.
 
-## First contract : `getContractBalance`
+## First contract : `getGlobalBankBalance`
 
 Let's write our first contract.
 Open up a new file on Remix and let's start writing code!
@@ -44,7 +44,7 @@ This is basically a way to tell remix which version of solidity to use. In solid
 The next thing is to define the contract itself.
 
 ```
-contract SmartBankAccount {
+contract Bank {
     
 }
 ```
