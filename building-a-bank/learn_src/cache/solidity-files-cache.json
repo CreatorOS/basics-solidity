@@ -1,0 +1,73 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/madhavan/work/content/basics-solidity/building-a-bank/learn_src/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1633660340560,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
+      ]
+    },
+    "/home/madhavan/work/content/basics-solidity/building-a-bank/learn_src/contracts/Bank.sol": {
+      "lastModificationDate": 1633660578940,
+      "contentHash": "6af6724cde4281481fefee68cb1fd982",
+      "sourceName": "contracts/Bank.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Bank"
+      ]
+    }
+  }
+}
