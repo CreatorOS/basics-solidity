@@ -1,3 +1,5 @@
+| config | value |
+| ------ | ----- |
 | pragma | osaes 0.0.1 |
 | published | false |
 | default_file | learn_src/Bank.sol |
