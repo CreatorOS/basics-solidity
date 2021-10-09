@@ -159,11 +159,49 @@ If yes (for the above), has the money been debited from some account before it i
 
 This is a lot of mess, right? Ethereum let’s you bypass all of these checks. Let’s see how to write this code better in the next subquest.
 
+## Add money to contract the right way
+In this code, we’ll change the function called addBalance with the keyword `payable`
 
+```
+    function addBalance() public payable {
+        balances[msg.sender] = msg.value;
+        globalBankBalance = globalBankBalance + msg.value;
+    }
+```
 
+On other programming languages, you only send parameters to a function call.
 
+On Solidity, you can send parameters _and_ money. To tell the compiler that this function is allowed to accept money – you add the modifier `payable`. If you have the `payable` keyword, you can start depositing money to this contract using this function.
 
+Ethereum creates a special context variable called `msg` when a function is called.
+How much money is being sent in this function call is denoted in `msg.value`.
+Who sent this message is denoted by `msg.sender`.
 
+`msg` is a special object that Ethereum attaches with every function call that’s made to a smart contract. Ethereum takes care of populating this context variable correctly. 
+
+To populate the `msg` object correctly, Ethereum needs an authentication signature. This signature is provided by Remix internally. However, we'll have to use other tools called wallets to provide this signature when we are deploying in production.
+
+If there is money being sent to the function call, Ethereum also guarantees that the sender actually holds those many ethers, and when they are sending ethers to this function, the money has been actually been deducted from their account. How Ethereum is able to do all this, we can safely ignore for this quest. We’ll dig into the machinery itself in a later quest.
+
+When this function is called, we update the balance of that user, and the total amount being held by this contract or bank.
+
+We use `mapping` to store what is the balance of which user. A mapping is the same as the dictionary or map data structure you might know from other programming languages. While defining the mapping, we defined the key and value data types.
+
+The key over here is an `address` of the user who will be depositing money to this smart account and the value is an integer (uint) denoting how much money has been deposited into this contract by this user.
+
+We will be storing this information so that when they decide to withdraw it, we know how much money they’re entitled to withdraw. Please note that we're storing the value as it is and not adding it to an existing balance. This is just to keep the code simple for now. So our bank allows only for single deposit and single withdraw.
+
+Now, we can do an interesting thing. We don't need to store the total amount that's been sent to the bank's contract in a variable. We can simply use the fact that every address has an account which has balance. So when money is sent to this function, it is sent to this function in _this_ contract. So when the money is sent to this contract the balance in the account of this contract is automatically updated. Ethereum does that for us - it debits the sender and credits the receiver. 
+
+```
+      function getGlobalBankBalance() public returns(uint){
+        return address(this).balance;
+      }
+```
+
+Neat, right? I know.
+
+Next, lets compile and run a payable function.
 
 
 
