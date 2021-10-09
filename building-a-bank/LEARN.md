@@ -103,7 +103,7 @@ Now that the program has been deployed, an account has been created for this pro
 
 To interact with the contract you have just deployed, you can tap on the arrow next to the contract address on the left bar under deployed contracts and hit the button that corresponds to the function that we’ve written “getContractBalance”. Remix creates this UI with buttons and input boxes automatically, based on the content of the contract.
 
-![learn_assets/1.jpg](learn_assets/1.jpg)
+![learn_src/learn_assets/1.jpg](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/1.jpg)
 
 Each time you deploy a contract, it deploys a new instance. You cannot upgrade an already deployed contract by default. In a later quest we'll see how to overcome this limitation using upgradable contracts.
 
