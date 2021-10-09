@@ -35,6 +35,7 @@ Open up a new file on Remix and let's start writing code!
 
 The first line in your contract must be 
 
+
 ```
 pragma solidity >=0.7.0 <0.9.0;
 ```
@@ -42,6 +43,7 @@ pragma solidity >=0.7.0 <0.9.0;
 This is basically a way to tell remix which version of solidity to use. In solidity this is required because, the development of solidity language itself is so fast that a new version is released almost every week and things keep breaking. To be sure, the solidity compiler version should be mentioned on the top of the file.
 
 The next thing is to define the contract itself.
+
 
 ```
 contract Bank {
@@ -52,6 +54,7 @@ contract Bank {
 Programs on solidity are called contracts. A contract keyword is exactly similar to the class keyword you would have encountered on js/py/java. We will define our data and methods inside this class (aka contract).
 
 Lastly , the function that we’ll write a function to get the balance of our bank.
+
 
 ```
     function getGlobalBankBalance() public returns(uint){
@@ -68,6 +71,7 @@ The little program we’ve written will also have an account by default. Whateve
 We’ve not sent any money to our contract (aka program’s) account yet. But in the next few subquests, you’ll see how we can write the logic to receive money and use those funds to build a smart bank.
 
 At this point, make sure you have setup the pragma, the contract and the function before you move on to the next quest. 
+
 
 ```
 Test cases : learn_src/learn_tests/01.sh
@@ -101,11 +105,41 @@ We will look at why it costs money in a later quest, because we need to understa
 
 Now that the program has been deployed, an account has been created for this program where it can hold money. We can also start calling the functions we’ve written.
 
-To interact with the contract you have just deployed, you can tap on the arrow next to the contract address on the left bar under deployed contracts and hit the button that corresponds to the function that we’ve written “getContractBalance”. Remix creates this UI with buttons and input boxes automatically, based on the content of the contract.
+To interact with the contract you have just deployed, you can tap on the arrow next to the contract address on the left bar under deployed contracts and hit the button that corresponds to the function that we’ve written `getGlobalBankBalance`. Remix creates this UI with buttons and input boxes automatically, based on the content of the contract.
 
-![learn_src/learn_assets/1.jpg](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/1.jpg)
+![Deployment in Remix](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/1.jpg)
+
 
 Each time you deploy a contract, it deploys a new instance. You cannot upgrade an already deployed contract by default. In a later quest we'll see how to overcome this limitation using upgradable contracts.
+
+When you hit the button and call the function, you’ll see the return in the output on the console on the bottom right. Make sure you tap on the expansion arrow next to “Debug” to see the entire log.
+
+You have to look for “decoded_output” in these logs.
+![Decoded Output](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/2.jpg)
+
+## Add money to contract
+What would we have to do if we have to add some balance to a user? We’ll create a function that takes parameters address of the user who’s balance we want to update and a value of by how much.
+
+That’s exactly what this function does here.
+
+Let’s compile and deploy this.
+
+Once it’s deployed tap on add balance, give an address, here’s a sample address for you `0x89Ce0f71D7387a580c6C07032f74f393a65d77F4` and a value say 1,000,000 to the call and hit transact.
+
+![Transact button](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/3.jpg)
+
+
+After doing that tap the button getContractBalance. You’ll notice the output says 1M. But where did this balance come from? Did we just pull out a Million dollars from thin air? If money has come into this account, it must have gotten deducted from somewhere else, right?
+
+To make sure this is a valid transaction, we need to add the following checks
+
+Is the user calling this function allowed to update the account identified by the address in the parameter? What if someone sends calls this function with 0 as amount and overwirting a victim of all their life savings?
+Does the user who is calling this function “addBalance” even have the amount of money they are looking add to the balance of the said account?
+If yes (for the above), has the money been debited from some account before it is credited to the account of this smart contract?
+This is a lot of mess, right? Ethereum let’s you bypass all of these checks. Let’s see how to write this code better in the next subquest.
+
+
+
 
 
 
