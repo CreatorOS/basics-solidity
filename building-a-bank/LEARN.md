@@ -120,23 +120,45 @@ You have to look for “decoded_output” in these logs.
 ## Add money to contract
 What would we have to do if we have to add some balance to a user? We’ll create a function that takes parameters address of the user who’s balance we want to update and a value of by how much.
 
+
+```
+    uint globalBankBalance = 0;
+
+    function getGlobalBankBalance() public returns(uint){
+        return globalBankBalance;
+    }
+    
+    mapping(address => uint) balances;
+    
+    function addBalance(address userAddress, uint amount) public payable {
+        balances[userAddress] = amount;
+        globalBankBalance = globalBankBalance + amount;
+    }
+```
+
+[Prefilled code here](https://remix.ethereum.org/#version=soljson-v0.8.4+commit.c7e474f2.js&optimize=false&runs=200&gist=845518edb7aba6f96cc863856fa1253b&evmVersion=null)
+
+
 That’s exactly what this function does here.
 
 Let’s compile and deploy this.
+
 
 Once it’s deployed tap on add balance, give an address, here’s a sample address for you `0x89Ce0f71D7387a580c6C07032f74f393a65d77F4` and a value say 1,000,000 to the call and hit transact.
 
 ![Transact button](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/3.jpg)
 
 
-After doing that tap the button getContractBalance. You’ll notice the output says 1M. But where did this balance come from? Did we just pull out a Million dollars from thin air? If money has come into this account, it must have gotten deducted from somewhere else, right?
+After doing that tap the button `getGlobalBankBalance`. You’ll notice the output says 1M. But where did this balance come from? Did we just pull out a Million dollars from thin air? If money has come into this account, it must have gotten deducted from somewhere else, right?
 
-To make sure this is a valid transaction, we need to add the following checks
+To make sure this is a valid transaction, we need to add the following checks :
 
 Is the user calling this function allowed to update the account identified by the address in the parameter? What if someone sends calls this function with 0 as amount and overwirting a victim of all their life savings?
 Does the user who is calling this function “addBalance” even have the amount of money they are looking add to the balance of the said account?
 If yes (for the above), has the money been debited from some account before it is credited to the account of this smart contract?
+
 This is a lot of mess, right? Ethereum let’s you bypass all of these checks. Let’s see how to write this code better in the next subquest.
+
 
 
 
