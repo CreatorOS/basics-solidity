@@ -70,8 +70,44 @@ We’ve not sent any money to our contract (aka program’s) account yet. But in
 At this point, make sure you have setup the pragma, the contract and the function before you move on to the next quest. 
 
 ```
-Todo : test cases 
+Test cases : learn_src/learn_tests/01.sh
 ```
+
+## Compile and deploy
+
+Unlike JS/Py, solidity code needs to be compiled before it can be deployed or run. On the left bar, look for the compile button and hit “compile subquest3.sol”.
+
+You might see some warnings, but that’s OK for now.
+
+Once the compilation is successful, we’ll deploy it. Tap on the “deploy & transaction” button on the left sidebar.
+
+Before we actually deploy this contract, we should look at a few concepts that are new to solidity and Ethereum.
+
+On the top, you’ll see that there are a few accounts for you to choose from. Remix has automatically created 20 accounts for you and preloaded it with 100eth money. These accounts are identified by addresses, as we had seen earlier. Remix allows you to change accounts by choosing one from the dropdown.
+
+I want you to notice that the account you’ve selected has 100Eth in it. This is because it costs some money to deploy a contract. So you need to select an account that actually has some Ethers in it. However these 100Eth are toy Ethers, available to use only within the Remix interface & only for testing.
+
+Then, hit deploy. There are various other options on this screen, that we'll ignore for now. We'll come back to them in the next few quests.
+
+What does it mean to deploy?
+
+Ethereum is a computer owned by everyone. Anyone can run code on that computer. We have to deploy code to be able to run on Ethereum. Anyone in the world can start calling the functions in the smart contracts that you've deployed immediately. You can even charge people for the same. Remix has an inbuilt toy version of Ethereum. Which is where we will be deploying first.
+
+Now that you’ve deployed it, you’ll be able to start calling the functions.
+
+On the right you’ll see a tick in the console box, meaning that it has been deployed and the balance of the selected account is now 99.99… This is because every deployment in Ethereum costs money. Every function call on Ethereum also costs money.
+
+We will look at why it costs money in a later quest, because we need to understand how Ethereum works internally.
+
+Now that the program has been deployed, an account has been created for this program where it can hold money. We can also start calling the functions we’ve written.
+
+To interact with the contract you have just deployed, you can tap on the arrow next to the contract address on the left bar under deployed contracts and hit the button that corresponds to the function that we’ve written “getContractBalance”. Remix creates this UI with buttons and input boxes automatically, based on the content of the contract.
+
+![learn_assets/1.jpg](learn_assets/1.jpg)
+
+Each time you deploy a contract, it deploys a new instance. You cannot upgrade an already deployed contract by default. In a later quest we'll see how to overcome this limitation using upgradable contracts.
+
+
 
 
 

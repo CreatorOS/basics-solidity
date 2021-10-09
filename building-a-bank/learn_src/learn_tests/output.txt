@@ -1,0 +1,14 @@
+
+==== ./01.sh ====
+Nothing to compile
+Test passed ./01.sh
+==== ./02.sh ====
+Greeter deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+Test passed ./02.sh
+==== ./03.sh ====
+Bank deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+Global bank balance, should be 0 :  0
+Test passed ./03.sh
+========
+Passed : 3
+Total : 3
