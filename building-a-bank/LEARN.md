@@ -21,17 +21,15 @@ At the end of this quest you’ll know how to build contracts that are almost as
 There are multiple tracks you can pick from in later quests ranging from building your own DeFi projects, security auditing other contracts, and earn some money along the way!
 
 
-## Remix
-We will be writing all our code in a new IDE called Remix. It sucks, but it’s the best editor for Solidity available out of the box. It is a browser based IDE, so you don’t have to install any software to get started.
+## The Interface
+We will be writing all our code in this Mobile Code Interface. You don’t have to install any software to get started.
 
-[Open Remix](https://remix.org)
-
-Remix is a code editor for Solidity. It also runs a toy blockchain that we’ll be using to deploy our first contract. Most of the steps are automated in Remix. In a later Quest, we’ll install all the components by hand to understand better what is happening under the hood.
+This is a code editor that runs a toy blockchain that we’ll be using to deploy our first contract. Most of the steps are automated. In a later Quest, we’ll install all the components by hand to understand better what is happening under the hood.
 
 ## First contract : `getGlobalBankBalance`
 
 Let's write our first contract.
-Open up a new file on Remix and let's start writing code!
+Open up the file in the background and start writing code.
 
 The first line in your contract must be 
 
@@ -57,8 +55,9 @@ Lastly , the function that we’ll write a function to get the balance of our ba
 
 
 ```
+    uint globalBankBalance;
     function getGlobalBankBalance() public returns(uint){
-        return 0;
+        return globalBankBalance;
     }
 ```
 
@@ -72,90 +71,65 @@ We’ve not sent any money to our contract (aka program’s) account yet. But in
 
 At this point, make sure you have setup the pragma, the contract and the function before you move on to the next quest. 
 
+Make sure you have the pragma correctly set in your file and hit the `Run Tests` button. 
+You should see that the first test should pass, likely the others are going to fail - but that's ok, we'll build one by one. 
 
-```
-Test cases : learn_src/learn_tests/01.sh
-```
 
 ## Compile and deploy
 
-Unlike JS/Py, solidity code needs to be compiled before it can be deployed or run. On the left bar, look for the compile button and hit “compile subquest3.sol”.
+Unlike JS/Py, solidity code needs to be compiled before it can be deployed or run. 
+After writing the code, hit compile.
 
 You might see some warnings, but that’s OK for now.
 
-Once the compilation is successful, we’ll deploy it. Tap on the “deploy & transaction” button on the left sidebar.
+Once the compilation is successful, we’ll deploy it. We'll do so by running the tests. 
 
-Before we actually deploy this contract, we should look at a few concepts that are new to solidity and Ethereum.
+We'll now analyze some of the output we're seeing on the screen, upon running the tests.
 
-On the top, you’ll see that there are a few accounts for you to choose from. Remix has automatically created 20 accounts for you and preloaded it with 100eth money. These accounts are identified by addresses, as we had seen earlier. Remix allows you to change accounts by choosing one from the dropdown.
+First you'll notice `Deployer address : ` and a `Balance`. 
+The MCI has created an account for you. This account is identified by the address. Since you are the person deploying the contract, you are the `deployer`. Your account is identified by this `address`.
 
-I want you to notice that the account you’ve selected has 100Eth in it. This is because it costs some money to deploy a contract. So you need to select an account that actually has some Ethers in it. However these 100Eth are toy Ethers, available to use only within the Remix interface & only for testing.
-
-Then, hit deploy. There are various other options on this screen, that we'll ignore for now. We'll come back to them in the next few quests.
+The MCI also gives you some test ETH as you'd see in your balance. You get 10ETH by default. 1 ETH = 10^18 wei.
+This is ofcourse not real Eth. This is only toy Eth that we'll use on our MCI. For every running anything on ethereum you need some Eth. So, instead of needing you to buy Eth to even run a simple test, MCI gives you a few toy Eth to start playing around with :)
 
 What does it mean to deploy?
 
-Ethereum is a computer owned by everyone. Anyone can run code on that computer. We have to deploy code to be able to run on Ethereum. Anyone in the world can start calling the functions in the smart contracts that you've deployed immediately. You can even charge people for the same. Remix has an inbuilt toy version of Ethereum. Which is where we will be deploying first.
+Ethereum is a computer owned by everyone. Anyone can run code on that computer. We have to deploy code to be able to run on Ethereum. Anyone in the world can start calling the functions in the smart contracts that you've deployed immediately. You can even charge people for the same. Remix has an inbuilt toy version of Ethereum. Which is where we will be deploying first. You'll notice that the balance in the deployer's account is 9.999 Eth. That is because the account initially had 10Eth but some of that got used to deploy the contract itself. 
 
 Now that you’ve deployed it, you’ll be able to start calling the functions.
 
-On the right you’ll see a tick in the console box, meaning that it has been deployed and the balance of the selected account is now 99.99… This is because every deployment in Ethereum costs money. Every function call on Ethereum also costs money.
+## Adding functions
 
-We will look at why it costs money in a later quest, because we need to understand how Ethereum works internally.
-
-Now that the program has been deployed, an account has been created for this program where it can hold money. We can also start calling the functions we’ve written.
-
-To interact with the contract you have just deployed, you can tap on the arrow next to the contract address on the left bar under deployed contracts and hit the button that corresponds to the function that we’ve written `getGlobalBankBalance`. Remix creates this UI with buttons and input boxes automatically, based on the content of the contract.
-
-![Deployment in Remix](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/1.jpg)
-
-
-Each time you deploy a contract, it deploys a new instance. You cannot upgrade an already deployed contract by default. In a later quest we'll see how to overcome this limitation using upgradable contracts.
-
-When you hit the button and call the function, you’ll see the return in the output on the console on the bottom right. Make sure you tap on the expansion arrow next to “Debug” to see the entire log.
-
-You have to look for “decoded_output” in these logs.
-![Decoded Output](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/2.jpg)
-
-## Add money to contract
-What would we have to do if we have to add some balance to a user? We’ll create a function that takes parameters address of the user who’s balance we want to update and a value of by how much.
-
-
+Let's first write a function to deposit money incorrectly. Then we'll add the correct function.
 ```
-    uint globalBankBalance = 0;
-
-    function getGlobalBankBalance() public returns(uint){
-        return globalBankBalance;
-    }
-    
-    mapping(address => uint) balances;
-    
-    function addBalance(address userAddress, uint amount) public payable {
-        balances[userAddress] = amount;
-        globalBankBalance = globalBankBalance + amount;
-    }
+  uint globalBankBalance;
+  mapping(address => uint) balances;
+  function depositIncorrectly(address user, uint amount) public{
+      balances[user] = amount;
+      globalBankBalance += amount;
+  }
 ```
 
-[Prefilled code here](https://remix.ethereum.org/#version=soljson-v0.8.4+commit.c7e474f2.js&optimize=false&runs=200&gist=845518edb7aba6f96cc863856fa1253b&evmVersion=null)
+This quest already has tests written where it'll call this function add balance with the parameters "deployer's address" and "1eth".
+
+Hit run tests to see if your function has been correctly set up.
+
+If your test passes for this part, you'll see
+`Function called successfully`
+
+However, the function calls depositIncorrectly with a balance of 10^18.
+However the balance difference in the user's wallet before and after sending the transaction would be much smaller. 
+Meaning the amount that we intended to deposit didn't get deducted from the user's balance. Then, how can we update the `balances[user]`?
+
+We cannot. We need to do something else. 
 
 
-That’s exactly what this function does here.
+To make sure this is done correctly, we need to add the following checks :
 
-Let’s compile and deploy this.
-
-
-Once it’s deployed tap on add balance, give an address, here’s a sample address for you `0x89Ce0f71D7387a580c6C07032f74f393a65d77F4` and a value say 1,000,000 to the call and hit transact.
-
-![Transact button](https://github.com/CreatorOS/basics-solidity/raw/master/building-a-bank/learn_src/learn_assets/3.jpg)
-
-
-After doing that tap the button `getGlobalBankBalance`. You’ll notice the output says 1M. But where did this balance come from? Did we just pull out a Million dollars from thin air? If money has come into this account, it must have gotten deducted from somewhere else, right?
-
-To make sure this is a valid transaction, we need to add the following checks :
-
-Is the user calling this function allowed to update the account identified by the address in the parameter? What if someone sends calls this function with 0 as amount and overwirting a victim of all their life savings?
-Does the user who is calling this function “addBalance” even have the amount of money they are looking add to the balance of the said account?
-If yes (for the above), has the money been debited from some account before it is credited to the account of this smart contract?
+- Is the user calling this function allowed to update the account identified by the address in the parameter? 
+- What if someone sends calls this function with 0 as amount and overwriting a victim of all their life savings?
+- Does the user who is calling this function `deposit` even have the amount of money they are looking add to the balance of the said account?
+    - If yes (for the above), has the money been debited from some account before it is credited to the account of this smart contract?
 
 This is a lot of mess, right? Ethereum let’s you bypass all of these checks. Let’s see how to write this code better in the next subquest.
 
@@ -163,9 +137,8 @@ This is a lot of mess, right? Ethereum let’s you bypass all of these checks. L
 In this code, we’ll change the function called addBalance with the keyword `payable`
 
 ```
-    function addBalance() public payable {
+    function depositCorrectly() public payable {
         balances[msg.sender] = msg.value;
-        globalBankBalance = globalBankBalance + msg.value;
     }
 ```
 
@@ -201,7 +174,129 @@ Now, we can do an interesting thing. We don't need to store the total amount tha
 
 Neat, right? I know.
 
-Next, lets compile and run a payable function.
+
+## Payable value, msg.value, msg.sender v/s params, wei
+
+The 5th test on the testcases will send money to this contract.
+By making the function payable, you're allowing people (and the test runner) to send Ethers to your contract. When  Ethers are sent to the contract. When money is sent to the function it is measured in a denomination called Wei. 1Eth = 10^18 Wei. Wei is the smallest denomination of money you can send on the Ethereum ecosystem.
+
+When you call a function - you send the function parameters and the `msg` object. The msg object is populated with the address of the account from which the function is called and also the amount of money attached to this function call. 
+
+Running the tests will show you the address of the sender, the amount attached in the function call.
+You can log the msg.sender and msg.value to see what was actually sent by using
+
+```
+import "hardhat/console.sol";
+```
+
+This should be included right after your pragma statement. 
+This is a utility function for logging. 
+
+
+Then, inside your `depositCorrectly` add 
+```
+console.log(msg.sender);
+console.log(msg.value);
+```
+
+Then, when you run the tests, you should see these variables in the output of test 5.
+
+## Introducing block, interest
+When withdrawing, we not only want to give the money back, we also want to add some interest.
+
+So we need to store when the deposit was made along with how much. For that we’ll introduce a new mapping called `depositTimestamp`.
+
+```
+    mapping(address => uint) depositTimestamps;
+    
+    function depositCorrectly() public payable {
+        balances[msg.sender] = msg.value;
+        depositTimestamps[msg.sender] = block.timestamp;
+    }
+```
+
+Now timestamps are tricky in solidity. There is no such thing as current timestamp. That is because, the functions you call on Ethereum/solidity aren’t executed immediately. They are batched into a few thousands. Once there are a few thousand functioncalls - called transactions - are registered, all of them are run together. This batch of function calls is called a block. The block in blockchain. A block is nothing but a set of all transactions that were a part of this batch. So we only get the timestamp of when the entire batch was run. i.e. block.timestamp = when were all the transactions in this block executed. That is why it takes between 10-20 seconds for a transaction to be completed on the real blockchain. 
+
+Now that we have the timestamp stored of when the transaction was made to deposit money, we’ll add a function called getBalance. Here, the user address can be a parameter because we’ll let anyone look up any other person’s balance – but only the actual owner of the balance can withdraw it.
+
+Let us in this function not only return the principal they deposited, but also a simple interest.
+
+```
+    function getBalance(address userAddress) public view returns(uint) {
+        uint principal = balances[userAddress];
+        uint timeElapsed = block.timestamp - depositTimestamps[userAddress]; //seconds
+        return principal + uint((principal * 7 * timeElapsed) / (100 * 365 * 24 * 60 * 60)); //simple interest of 7%  per year
+    }
+```
+
+Note that the calculation looks a little complex because solidity doesn’t have support for decimals (float or double) yet.
+
+Run the tests to see that the balance keeps increasing with time
+
+Now that the interest has been calculated, let’s withdraw.
+
+
+## Withdraw  & transfer
+
+```
+    function withdraw() public payable {
+        address payable withdrawTo = payable(msg.sender);
+        uint amountToTransfer = getBalance(msg.sender);
+        balances[msg.sender] = 0;
+        withdrawTo.transfer(amountToTransfer);
+    }
+```
+
+Here we will allow for a withdrawal.
+
+We need to look up what is the balance of the user who is requesting a withdrawal. So we will use `msg.sender` now just to make sure the withdrawal is being made by the person who is actually requesting the same.
+
+We’ve already written the logic for how much money this user has including the simple interest. So we’ll just use the same function to get how much money to send to the withdrawer.
+
+We need to send money to an account identified by an address. This address we know from msg.sender. But we’ll need to convert it into a payable address before we can send money. This is just a check to make sure we don’t send money to undeserving addresses by mistake. Then we initiate a transfer.
+
+Let’s deploy.
+
+This time after deploying, let’s add money to the account.
+
+Check the balance a few times. We see that the balance is increasing, by whatever small amount.
+
+Now let’s withdraw.
+
+But you wouldn’t have received any amount back into your account. Why do you think that is? The transaction failed.
+
+Let’s check balance in contract : 10eth
+
+Let’s check the balance of the user : 10.0000001eth because of interest.
+
+Where is this interest coming from? Are we pulling it out of thin air? The contract can only send as much money it has in its coffers. We’re trying to send more than it has. That is why the transaction fails, when you run the test 7. 
+
+In order to have this test pass, we need to add some money.
+
+We need to add money to the contract account itself.
+We don't write any logic, just define a function where we can send in some money by making it payable. 
+
+```
+    function addMoneyToBank() public payable {
+        // do nothing. :)
+    }
+```
+Before withdrawing, we'll add some money to the bank so that it has enough balance to payout the user. That is, payout the principal plus the interest. 
+
+Let's run tests again!
+
+## What next?
+You just successfully wrote code that runs on Ethereum. But how is it any different from running a python program on my desktop?
+
+Ofcourse in this primer, we’ve abstracted out a lot of jargons so that we can get to the crux of the matter. To build resilient smart contracts, it is important to understand what is really happening and understand some of the jargons.
+
+Ethereum is a world computer. Everyone is running code on this single computer. Anyone can connect their laptop to this world computer and add a CPU to it, and make it even more powerful. There are hundreds of thousands of computers that contribute their processing power to this world computer. Each of these computers are called miner nodes.
+
+If you remember, it costed us some ethers to deploy a contract or call a function in our contract. That is because these miner nodes need to pay for electricity to keep their computers always on and connected to the world computer. This money we’re paying for running our code is called gas and it is paid in Ethers (or wei).
+
+In the next quest we’ll explore more into these details and deploy what you’ve built so that you can start sharing the contract you’ve made with your friends 😊
+
+
 
 
 
