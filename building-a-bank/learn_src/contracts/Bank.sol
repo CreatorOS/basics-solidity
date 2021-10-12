@@ -1,6 +1,9 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
+
+import "hardhat/console.sol";
+
 contract Bank {
     uint globalBankBalance; 
     function getGlobalBankBalance() public returns(uint){
@@ -27,6 +30,7 @@ contract Bank {
         address payable withdrawTo = payable(msg.sender);
         uint amountToTransfer = getBalance(msg.sender);
         balances[msg.sender] = 0;
+        console.log(amountToTransfer, address(this).balance);
         withdrawTo.transfer(amountToTransfer);
     }
 

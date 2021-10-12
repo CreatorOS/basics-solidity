@@ -36,8 +36,8 @@
       ]
     },
     "/home/madhavan/work/content/basics-solidity/building-a-bank/learn_src/contracts/Bank.sol": {
-      "lastModificationDate": 1633947094630,
-      "contentHash": "233a100a03fa30febf7eae551d7eb07f",
+      "lastModificationDate": 1634021636540,
+      "contentHash": "a4d5c56b90d7120fde7cdab28455f43c",
       "sourceName": "contracts/Bank.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -61,7 +61,9 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "hardhat/console.sol"
+      ],
       "versionPragmas": [
         "^0.8.0"
       ],
