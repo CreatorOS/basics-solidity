@@ -1,1 +1,2 @@
-npx hardhat run ../scripts/getbalance.js
+dir_path=$(dirname $(realpath $0))
+npx hardhat run $dir_path/../scripts/getbalance.js
