@@ -4,7 +4,7 @@
 | published    | false                        |
 | default_file | learn_src/contracts/Bank.sol |
 
-# BUILDING A BANK WITH SOLIDITY; FOR BEGINNERS
+# Building a bank with Solidity; for beginners
 
 Welcome to the Solidity Joyride Quest. In this quest you will learn all about the basics of developing applications on Ethereum. We don’t require you to have any background on Ethereum development. If you’re a developer in any programming language and you've heard the terms _Ethereum_, _Blockchain_, _Crypto Currencies_ etc. you should be good.
 
