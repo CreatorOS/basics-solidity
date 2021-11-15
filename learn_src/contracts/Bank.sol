@@ -1,1 +1,1 @@
-// Open up the quest content from below and start writing code here
+// Tap on the document icon, on the top right, to get started
