@@ -6,17 +6,19 @@ import "hardhat/console.sol";
 
 contract Bank {
     uint globalBankBalance; 
-    function getGlobalBankBalance() public returns(uint){
+    function getGlobalBankBalance() public view returns(uint){
         return globalBankBalance;
+        // return address(this).balance;
     }
 
-    mapping(address => uint) balances;
+    mapping(address => uint) public balances;
     function depositIncorrectly(address user, uint amount) public {
         balances[user] = amount;
         globalBankBalance += amount;
     }
     function depositCorrectly() public payable {
         balances[msg.sender] = msg.value;
+        // depositTimestamps[msg.sender] = block.timestamp;
     }
     mapping(address => uint) depositTimestamps;
 

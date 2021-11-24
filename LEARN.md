@@ -53,7 +53,7 @@ Lastly , the function that we’ll write a function to get the balance of our ba
 
 ```
     uint globalBankBalance;
-    function getGlobalBankBalance() public returns(uint){
+    function getGlobalBankBalance() public view returns(uint){
         return globalBankBalance;
     }
 ```
@@ -100,7 +100,7 @@ Let's first write a function to deposit money incorrectly. Then we'll add the co
 
 ```
   uint globalBankBalance;
-  mapping(address => uint) balances;
+  mapping(address => uint) public balances;
   function depositIncorrectly(address user, uint amount) public{
       balances[user] = amount;
       globalBankBalance += amount;

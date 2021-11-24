@@ -21,16 +21,21 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   await bank.deployed();
   console.log("Bank deployed to:", bank.address);
-  console.log(`Trying to call depositIncorrectly(${deployer.address}, 1000000000000000000)`);
   try {
-    console.log("User balance in wallet before sending:", (await deployer.getBalance()).toString());
-    const before = parseInt((await deployer.getBalance()).toString());
+    const before = new BN((await bank.balances(deployer.address)).toString());
+    console.log("User Bank balance before sending:", before.toString());
+    console.log(`Trying to call depositCorrectly({value: 1000000000000000000})`);
     await (bank.connect(deployer).depositCorrectly({ value: "1000000000000000000"}));
-    const after = parseInt((await deployer.getBalance()).toString());
+    const after = new BN((await bank.balances(deployer.address)).toString());
+    console.log("User Bank balance after sending:", after.toString());
     console.log("Function called successfully")
-    console.log("User balance in wallet after sending:", (await deployer.getBalance()).toString())
-    console.log("User balance difference:", before - after);
-    console.log("Expected     difference:", (new BN("1000000000000000000", 10)).toString());
+    if(after.gt(before)) {
+      console.log('Test passed');
+      process.exit(0);
+    } else {
+      console.error('Test failed');
+      process.exit(1);
+    }
   }
   catch(e) {
     console.error(e);

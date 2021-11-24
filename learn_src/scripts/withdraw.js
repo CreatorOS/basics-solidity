@@ -18,13 +18,13 @@ async function main() {
   const Bank = await hre.ethers.getContractFactory("Bank");
   const bank = await Bank.deploy();
 
-  const [deployer] = await ethers.getSigners();
+  const [deployer, uesr2] = await ethers.getSigners();
   await bank.deployed();
   console.log("Bank deployed to:", bank.address);
-  console.log(`Trying to call depositIncorrectly(${deployer.address}, 1000000000000000000)`);
   try {
     console.log("User balance in wallet before sending:", (await deployer.getBalance()).toString());
     const before = parseInt((await deployer.getBalance()).toString());
+    console.log(`Trying to call depositCorrectly({value: 1000000000000000000})`);
     await (bank.connect(deployer).depositCorrectly({ value: "1000000000000000000"}));
     const after = parseInt((await deployer.getBalance()).toString());
     console.log("Function called successfully")
@@ -33,11 +33,20 @@ async function main() {
     console.log("Expected     difference:", (new BN("1000000000000000000", 10)).toString());
     console.log("getBalance() : ", (await bank.getBalance(deployer.address)).toString());
     console.log("Adding balance to the bank...");
-    bank.connect(deployer).addMoneyToBank({ value: "10000000000000000000"});
-    console.log("User balance in wallet before withdraw:", (await deployer.getBalance()).toString())
+    bank.connect(uesr2).addMoneyToBank({ value: "10000000000000000000"});
+    const balBefore = new BN((await deployer.getBalance()).toString());
+    console.log("User balance in wallet before withdraw:", balBefore.toString())
     await bank.connect(deployer).withdraw();
     console.log("Withdraw successful");
-    console.log("User balance in wallet after withdraw:", (await deployer.getBalance()).toString())
+    const balAfter = new BN((await deployer.getBalance()).toString());
+    console.log("User balance in wallet after withdraw:", balAfter.toString());
+    if(balAfter.gt(balBefore)) {
+      console.log('Test Passed');
+      process.exit(0);
+    } else {
+      console.log('Test Failed');
+      process.exit(1);
+    }
 
   }
   catch(e) {

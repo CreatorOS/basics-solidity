@@ -19,10 +19,20 @@ async function main() {
 
   await bank.deployed();
   console.log("Bank deployed to:", bank.address);
-  const bankBalance = await bank.getGlobalBankBalance();
-  console.log("Global bank balance, should be 0 : ", parseInt(bankBalance.value));
-  if(parseInt(bankBalance.value) != 0)
-    process.exit(1);
+  try {
+    const bankBalance = await bank.getGlobalBankBalance();
+    console.log("Global bank balance, should be 0 : ", parseInt(bankBalance));
+    if(parseInt(bankBalance) != 0){
+      console.log('Test Failed');
+      process.exit(1);
+    } else {
+      console.log('Test Passed');
+      process.exit(0);
+    }
+  } catch (error) {
+      console.log('Test Failed');
+      process.exit(1);
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere
